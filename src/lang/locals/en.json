@@ -1,0 +1,9 @@
+{
+  "global": {},
+  "buttons": {
+    "continue": "Continue"
+  },
+  "message": {
+    "hello": "{msg} world"
+  }
+}

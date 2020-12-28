@@ -1,0 +1,27 @@
+$z-layers: (
+    bottomless-pit: -9999,
+    default: 1,
+    dropdown: 3000,
+    overlay: 4000,
+    modal: 4001
+);
+
+//Z index from map
+@function z($key) {
+    @if map-has-key($z-layers, $key) {
+        @return map-get($z-layers, $key);
+    }
+
+    @warn "Unknown `#{$key}` in $z-layers.";
+    @return null;
+}
+
+@function em($px, $body:14) {
+    @return ($px/$body)+em;
+}
+
+//Px to procent
+
+@function proc($target, $context:320) {
+    @return ($target/$context)*100%;
+}
