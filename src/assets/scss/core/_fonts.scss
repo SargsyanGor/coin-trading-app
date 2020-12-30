@@ -1,0 +1,66 @@
+// Open sans(google font)
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+// Main Proxima Nova font
+$font_path: '~@/assets/fonts/';
+
+@font-face {
+  font-family: 'Proxima Nova Rg';
+  src: url($font_path + 'ProximaNova-Regular.woff2') format('woff2'),
+  url($font_path + 'ProximaNova-Regular.woff') format('woff'),
+  url($font_path + 'ProximaNova-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Th';
+  src: url($font_path + 'ProximaNova-Extrabld.woff2') format('woff2'),
+  url($font_path + 'ProximaNova-Extrabld.woff') format('woff'),
+  url($font_path + 'ProximaNova-Extrabld.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Bl';
+  src: url($font_path + 'ProximaNova-Black.woff2') format('woff2'),
+  url($font_path + 'ProximaNova-Black.woff') format('woff'),
+  url($font_path + 'ProximaNova-Black.ttf') format('truetype');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova B';
+  src: url($font_path + 'ProximaNova-Bold.woff2') format('woff2'),
+  url($font_path + 'ProximaNova-Bold.woff') format('woff'),
+  url($font_path + 'ProximaNova-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Alt Lt';
+  src: url($font_path + 'ProximaNovaA-Light.woff2') format('woff2'),
+  url($font_path + 'ProximaNovaA-Light.woff') format('woff'),
+  url($font_path + 'ProximaNovaA-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Proxima Nova Th';
+  src: url($font_path + 'ProximaNovaT-Thin.woff2') format('woff2'),
+  url($font_path + 'ProximaNovaT-Thin.woff') format('woff'),
+  url($font_path + 'ProximaNovaT-Thin.ttf') format('truetype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+

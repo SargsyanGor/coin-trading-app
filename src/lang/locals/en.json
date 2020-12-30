@@ -1,7 +1,24 @@
 {
-  "global": {},
+  "global": {
+    "balance": "Balance",
+    "email": "Email",
+    "password": "Password"
+  },
+  "auth": {
+    "log_in": "Log in",
+    "input_email": "Input your email",
+    "input_pass": "Input your password",
+    "view": "View",
+    "hide": "Hide",
+    "forget_pass": "Forget password?",
+    "dont_have_account": "Dont have account?",
+    "sign_up": "Sign up",
+    "forget_your_pass": "Forgot your password",
+    "pass_reset_info": "We will send you reset password link through email. Please provide us with you email below.",
+    "sent": "Sent"
+  },
   "buttons": {
-    "continue": "Continue"
+    "trading_portal": "Trading portal"
   },
   "message": {
     "hello": "{msg} world"

@@ -5,6 +5,16 @@
   box-sizing:         $type;
 }
 
+//Green button
+@mixin greenBtn() {
+  background: $greenBtn;
+  border-radius: 35px;
+  font-family: $proximaBold;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 20px;
+}
+
 //prefix for all browsers
 @mixin prefix ($property, $value,
                  $moz:    true,

@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <Header />
-    <v-main> </v-main>
+    <v-main>
+      <router-view></router-view>
+    </v-main>
   </v-app>
 </template>
 
@@ -23,5 +25,9 @@ export default {
 
 <style lang="scss">
 .v-application {
+  background: $mainBg !important;
+  .v-application--wrap {
+    padding: 50px 97px;
+  }
 }
 </style>

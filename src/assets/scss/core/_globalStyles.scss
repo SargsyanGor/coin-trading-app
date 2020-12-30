@@ -1,0 +1,32 @@
+.v-btn {
+  text-transform: none!important;
+}
+// text field error text
+.v-application--is-ltr .v-messages {
+  text-align: right!important;
+}
+// input
+.v-input {
+  .v-input__slot {
+    padding: 0 30px!important;
+    background: $darkInput!important;
+    border-radius: 29px!important;
+    input {
+      font-family: $proximaReg!important;
+      font-style: normal!important;
+      font-weight: normal!important;
+      font-size: 20px!important;
+      line-height: 22px!important;
+      &::placeholder {
+        font-family: $proximaReg!important;
+        font-style: normal!important;
+        font-weight: normal!important;
+        font-size: 20px!important;
+        line-height: 22px!important;
+        color: #ffffff!important;
+        opacity: 0.3!important;
+        mix-blend-mode: normal!important;
+      }
+    }
+  }
+}
