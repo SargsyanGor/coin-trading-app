@@ -2,12 +2,18 @@
   "global": {
     "balance": "Balance",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "name": "Name",
+    "phone_number": "Phone number"
   },
   "auth": {
     "log_in": "Log in",
     "input_email": "Input your email",
     "input_pass": "Input your password",
+    "write_name": "Write your name",
+    "write_email": "Write your email",
+    "input_phone_number": "Input your number",
+    "input_pass_2": "Input password",
     "view": "View",
     "hide": "Hide",
     "forget_pass": "Forget password?",
@@ -15,7 +21,13 @@
     "sign_up": "Sign up",
     "forget_your_pass": "Forgot your password",
     "pass_reset_info": "We will send you reset password link through email. Please provide us with you email below.",
-    "sent": "Sent"
+    "sent": "Sent",
+    "reset_link_sent": "Reset link has been sent",
+    "we_have_sent_password": "We’ve sent you the reset link on your email.<br> Please check and click on that link we’ve sent",
+    "upload_id": "Upload your ID",
+    "referral_code": "Referral code (if any)",
+    "input_code": "Input code",
+    "have_account": "Already have account?"
   },
   "buttons": {
     "trading_portal": "Trading portal"

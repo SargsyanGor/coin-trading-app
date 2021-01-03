@@ -16,9 +16,9 @@
           <h5>{{ $t("global.password") }}</h5>
           <v-text-field
             v-model="password"
-            :append-icon="showPassword ? 'hide' : 'view'"
+            :append-icon="showPassword ? $t('auth.hide') : $t('auth.view')"
             :rules="[passwordRules.required, passwordRules.min]"
-            :type="showPassword ? $t('auth.hide') : $t('auth.view')"
+            :type="showPassword ? 'text' : 'password'"
             :placeholder="$t('auth.input_pass')"
             @click:append="showPassword = !showPassword"
             hint="At least 8 characters"
@@ -28,16 +28,33 @@
             solo
           ></v-text-field>
           <div class="d-flex flex-column justify-center align-center">
-            <v-btn depressed color="transparent" class="gs_forget_btn" @click.stop="showResetPassDialog = true">
-              {{ $t('auth.forget_pass') }}
+            <v-btn
+              depressed
+              color="transparent"
+              class="gs_forget_btn"
+              @click.stop="showResetPassDialog = true"
+            >
+              {{ $t("auth.forget_pass") }}
             </v-btn>
-            <v-btn width="100%" height="70" max-width="473px" class="gs_login_btn" @click="validate()">
-              {{ $t('auth.log_in') }}
+            <v-btn
+              width="100%"
+              height="70"
+              max-width="473px"
+              class="gs_login_btn"
+              @click="validate()"
+            >
+              {{ $t("auth.log_in") }}
             </v-btn>
             <div class="d-flex align-center gs_account_missed_bottom_info">
-              <p class="mb-0">{{ $t('auth.dont_have_account') }}</p>
-              <v-btn depressed color="transparent" class="pa-1" plain>
-                {{ $t('auth.sign_up') }}
+              <p class="mb-0">{{ $t("auth.dont_have_account") }}</p>
+              <v-btn
+                depressed
+                color="transparent"
+                class="pa-1"
+                plain
+                @click="$emit('showSignUpForm')"
+              >
+                {{ $t("auth.sign_up") }}
               </v-btn>
             </div>
           </div>
@@ -45,29 +62,24 @@
       </v-col>
     </v-row>
     <!--Reset password dialog included below-->
-    <ResetPasswordDialog v-model="showResetPassDialog"/>
+    <ResetPasswordDialog v-model="showResetPassDialog" />
   </v-container>
 </template>
 
 <script>
 import ResetPasswordDialog from "./ResetPasswordDialog";
+import { formValidationRules } from "@/mixins/formValidationRules";
+
 export default {
   name: "LoginForm",
   components: { ResetPasswordDialog },
+  mixins: [formValidationRules],
   data: () => ({
     showResetPassDialog: false,
     valid: true,
     email: "",
     showPassword: false,
-    password: "",
-    passwordRules: {
-      required: value => !!value || "Password is required",
-      min: v => v.length >= 8 || "Min 8 characters"
-    },
-    emailRules: {
-      required: v => !!v || "E-mail is required",
-      validEmail: v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-    }
+    password: ""
   }),
   methods: {
     validate() {
@@ -102,6 +114,9 @@ export default {
     ::v-deep .v-input__slot {
       .v-text-field__slot {
         padding-right: 22px;
+      }
+      .v-text-field__details {
+        text-align: right !important;
       }
       .v-input__append-inner {
         font-size: 50px;
@@ -145,6 +160,7 @@ export default {
       line-height: 18px;
       color: $greenBtn;
       margin-left: 5px;
+      letter-spacing: 0.1px;
     }
   }
 }

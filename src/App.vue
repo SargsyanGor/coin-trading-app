@@ -24,8 +24,8 @@ export default {
 </script>
 
 <style lang="scss">
-.v-application {
-  background: $mainBg !important;
+.theme--dark.v-application {
+  background-color: $mainBg !important;
   .v-application--wrap {
     padding: 50px 97px;
   }

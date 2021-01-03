@@ -1,57 +1,95 @@
 <template>
   <v-dialog
     v-model="show"
-    width="600"
+    :width="!resetProcessConfirmed ? 600 : ''"
+    max-width="726"
     content-class="gs_reset_password_dialog"
     overlay-color="#000"
     overlay-opacity="0.5"
     transition="scale-transition"
     origin="center center"
   >
-    <div class="text-sm-right">
+    <div class="gs_header_close_btn_wrapper">
       <v-btn
-              color="transparent"
-              depressed
-              small
-              fab
-              @click.stop="show = false"
+        color="transparent"
+        absolute
+        right
+        depressed
+        small
+        fab
+        @click.stop="show = false"
       >
         <v-img
-                max-height="38"
-                max-width="38"
-                contain
-                src="@/assets/icons/closeIcon.svg"
+          max-height="38"
+          max-width="38"
+          contain
+          src="@/assets/icons/closeIcon.svg"
         ></v-img>
       </v-btn>
     </div>
-    <v-card color="transparent" elevation="0">
-      <v-card-title class="headline justify-center">
-          {{ $t('auth.forget_your_pass') }}
-      </v-card-title>
+    <transition name="fade" mode="out-in">
+      <v-card
+        class="gs_reset_link_form_wrapper"
+        color="transparent"
+        elevation="0"
+        v-if="!resetProcessConfirmed"
+        key="1"
+      >
+        <v-card-title class="headline justify-center">
+          {{ $t("auth.forget_your_pass") }}
+        </v-card-title>
 
-      <v-card-text class="text-sm-center">
-        {{ $t('auth.pass_reset_info') }}
-      </v-card-text>
+        <v-card-text class="text-sm-center">
+          {{ $t("auth.pass_reset_info") }}
+        </v-card-text>
 
-      <v-form ref="form" v-model="validPassReset" lazy-validation>
-        <v-text-field
-          v-model="email"
-          :rules="[emailRules.required, emailRules.validEmail]"
-          :placeholder="$t('auth.input_email')"
-          height="68"
-          solo
-          flat
-        ></v-text-field>
-        <v-btn
-          width="100%"
-          height="70"
-          class="gs_reset_pass_btn"
-          @click="validatePassReset()"
-        >
-          {{ $t("auth.sent") }}
-        </v-btn>
-      </v-form>
-    </v-card>
+        <v-form ref="form" v-model="validPassReset" lazy-validation>
+          <v-text-field
+            v-model="email"
+            :rules="[emailRules.required, emailRules.validEmail]"
+            :placeholder="$t('auth.input_email')"
+            height="68"
+            solo
+            flat
+          ></v-text-field>
+          <v-btn
+            width="100%"
+            height="70"
+            class="gs_reset_pass_btn"
+            @click="validatePassReset()"
+          >
+            {{ $t("auth.sent") }}
+          </v-btn>
+        </v-form>
+      </v-card>
+      <v-card
+        color="transparent"
+        elevation="0"
+        class="mt-0 gs_reset_link_confirmed_wrapper"
+        key="2"
+        v-else
+      >
+        <v-list-item two-line>
+          <v-list-item-avatar tile size="110" class="my-0 mr-12">
+            <v-img
+              max-width="110px"
+              max-height="110px"
+              contain
+              src="@/assets/icons/checked-green.svg"
+            ></v-img>
+          </v-list-item-avatar>
+
+          <v-list-item-content class="align-self-start pt-0">
+            <v-list-item-title class="headline mb-5">
+              {{ $t("auth.reset_link_sent") }}
+            </v-list-item-title>
+            <v-list-item-subtitle
+              v-html="$t('auth.we_have_sent_password')"
+            ></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-card>
+    </transition>
   </v-dialog>
 </template>
 
@@ -64,6 +102,7 @@ export default {
   data: () => ({
     validPassReset: false,
     email: "",
+    resetProcessConfirmed: false,
     emailRules: {
       required: v => !!v || "E-mail is required",
       validEmail: v => /.+@.+\..+/.test(v) || "E-mail must be valid"
@@ -75,13 +114,19 @@ export default {
         return this.value;
       },
       set(value) {
+        if (!value) {
+          this.resetProcessConfirmed = false;
+        }
         this.$emit("input", value);
       }
     }
   },
   methods: {
     validatePassReset() {
-      this.$refs.form.validate();
+      let validationSuccess = this.$refs.form.validate();
+      if (validationSuccess) {
+        this.resetProcessConfirmed = true;
+      }
     }
   }
 };
@@ -93,10 +138,14 @@ export default {
   border-radius: 51px;
   padding: 40px;
   background: $mainBg;
-  .v-card {
+  .gs_header_close_btn_wrapper {
+    position: relative;
+    min-height: 40px;
+  }
+  .v-card.gs_reset_link_form_wrapper {
     margin-top: 40px;
     .v-card__title {
-      font-family:$proximaBold;
+      font-family: $proximaBold;
       font-style: normal;
       font-size: 26px;
       line-height: 24px;
@@ -115,6 +164,26 @@ export default {
     .gs_reset_pass_btn {
       margin-top: 18px;
       @include greenBtn();
+    }
+  }
+  .v-card.gs_reset_link_confirmed_wrapper {
+    margin-bottom: 35px;
+    .headline {
+      font-family: $proximaBold;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 26px;
+      line-height: 24px;
+      letter-spacing: 0.325px;
+    }
+    .v-list-item__subtitle {
+      font-family: $proximaReg;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      line-height: 30px;
+      mix-blend-mode: normal;
+      opacity: 0.5;
     }
   }
 }
