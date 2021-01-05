@@ -1,11 +1,16 @@
+// ------------------------------BUTTONS
 .v-btn {
   text-transform: none!important;
 }
-// text field error text
+
+
+// -------------------------TEXT FIELD ERROR TEXT
 .v-application--is-ltr .v-messages {
   text-align: right!important;
 }
-// input
+
+
+// --------------------------INPUT
 .v-input {
   .v-input__slot {
     padding: 0 30px!important;
@@ -27,6 +32,14 @@
         opacity: 0.3!important;
         mix-blend-mode: normal!important;
       }
+      @include respond-below(xs) {
+        font-size: 16px!important;
+        line-height: 18px!important;
+        &::placeholder {
+          font-size: 16px!important;
+          line-height: 18px!important;
+        }
+      }
     }
   }
 }
@@ -41,7 +54,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
-// animation
+
+
+// ----------------------------ANIMATION
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.7s;
@@ -50,3 +65,10 @@ input[type=number] {
 .fade-leave-to {
   opacity: 0;
 }
+
+
+// -----------------------------RESET DEFAULT STYLES
+html {
+  overflow-y: auto !important;
+}
+

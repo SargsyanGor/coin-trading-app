@@ -1,8 +1,8 @@
 <template>
   <v-container fluid class="gs_login_container">
     <v-row class="justify-center">
-      <v-col cols="4">
-        <h2>{{ $t("auth.log_in") }}</h2>
+      <v-col sm="9" md="8" lg="4">
+        <h2 class="text-md-left text-center">{{ $t("auth.log_in") }}</h2>
         <v-form ref="form" v-model="valid" lazy-validation>
           <h5>{{ $t("global.email") }}</h5>
           <v-text-field
@@ -152,6 +152,10 @@ export default {
       font-weight: normal;
       font-size: 18px;
       line-height: 18px;
+      @include respond-below(xs) {
+        font-size: 16px;
+        line-height: 16px;
+      }
     }
     .v-btn {
       font-family: $proximaBold;
@@ -161,6 +165,10 @@ export default {
       color: $greenBtn;
       margin-left: 5px;
       letter-spacing: 0.1px;
+      @include respond-below(xs) {
+        font-size: 16px;
+        line-height: 16px;
+      }
     }
   }
 }

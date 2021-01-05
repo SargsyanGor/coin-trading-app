@@ -1,16 +1,12 @@
 <template>
   <v-container fluid class="gs_sign_up_container">
     <v-row class="justify-center">
-      <v-col cols="6">
-        <h2>{{ $t("auth.sign_up") }}</h2>
-      </v-col>
-    </v-row>
-    <v-row class="justify-center">
-      <v-col cols="6" class="pa-0">
+      <v-col sm="9" md="9" lg="6">
+        <h2 class="text-md-left text-center pl-3">{{ $t("auth.sign_up") }}</h2>
         <v-form ref="form" v-model="validSignUp" lazy-validation>
           <v-container fluid>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <h5>{{ $t("global.name") }}</h5>
                 <v-text-field
                   v-model="name"
@@ -22,7 +18,7 @@
                   aria-required="true"
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <h5>{{ $t("global.email") }}</h5>
                 <v-text-field
                   v-model="email"
@@ -36,7 +32,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <h5>{{ $t("global.phone_number") }}</h5>
                 <v-text-field
                   v-model="phoneNumber"
@@ -48,7 +44,7 @@
                   flat
                 ></v-text-field>
               </v-col>
-              <v-col cols="6">
+              <v-col cols="12" md="6">
                 <h5>{{ $t("global.password") }}</h5>
                 <v-text-field
                   v-model="password"
@@ -206,6 +202,9 @@ export default {
         justify-content: center;
         color: #ffffff;
       }
+      .v-input__append-inner {
+        display: none;
+      }
     }
   }
   .v-btn.gs_sign_up_btn {
@@ -219,6 +218,10 @@ export default {
       font-weight: normal;
       font-size: 18px;
       line-height: 18px;
+      @include respond-below(xs) {
+        font-size: 16px;
+        line-height: 16px;
+      }
     }
     .v-btn {
       font-family: $proximaBold;
@@ -228,6 +231,10 @@ export default {
       color: $greenBtn;
       margin-left: 5px;
       letter-spacing: 0.1px;
+      @include respond-below(xs) {
+        font-size: 16px;
+        line-height: 16px;
+      }
     }
   }
 }
