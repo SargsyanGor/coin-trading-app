@@ -91,7 +91,7 @@ export default {
 
 <style lang="scss" scoped>
 .gs_login_container {
-  margin-top: 160px;
+  margin-top: 100px;
   h2 {
     font-family: $proximaBold;
     font-style: normal;
@@ -104,8 +104,8 @@ export default {
     font-family: $proximaReg;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: 22px;
+    font-size: 18px;
+    line-height: 20px;
     mix-blend-mode: normal;
     opacity: 0.5;
     margin-bottom: 20px;
@@ -124,8 +124,8 @@ export default {
           font-family: $proximaReg;
           font-style: normal;
           font-weight: normal;
-          font-size: 20px;
-          line-height: 22px;
+          font-size: 18px;
+          line-height: 20px;
           text-transform: capitalize;
           color: $mainBlue !important;
         }
@@ -136,10 +136,10 @@ export default {
     font-family: $proximaReg;
     font-style: normal;
     font-weight: normal;
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 16px;
     color: $greenBtn;
-    margin-bottom: 55px;
+    margin-bottom: 35px;
   }
   .gs_login_btn.v-btn {
     margin-bottom: 25px;
@@ -150,8 +150,8 @@ export default {
       font-family: $proximaReg;
       font-style: normal;
       font-weight: normal;
-      font-size: 18px;
-      line-height: 18px;
+      font-size: 16px;
+      line-height: 16px;
       @include respond-below(xs) {
         font-size: 16px;
         line-height: 16px;
@@ -160,8 +160,8 @@ export default {
     .v-btn {
       font-family: $proximaBold;
       font-style: normal;
-      font-size: 18px;
-      line-height: 18px;
+      font-size: 16px;
+      line-height: 16px;
       color: $greenBtn;
       margin-left: 5px;
       letter-spacing: 0.1px;

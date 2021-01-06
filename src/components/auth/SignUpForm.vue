@@ -65,15 +65,61 @@
             </v-row>
             <v-row>
               <v-col cols="12">
-                <v-file-input
-                  class="gs_id_uploader_input"
-                  :rules="[idRules.required]"
-                  :placeholder="$t('auth.upload_id')"
-                  prepend-icon=""
-                  outlined
-                  flat
-                  solo
-                ></v-file-input>
+                <transition name="fade" mode="out-in">
+                  <v-file-input
+                    accept="image/x-png,image/gif,image/jpeg"
+                    class="gs_id_uploader_input"
+                    :rules="[idRules.required]"
+                    :placeholder="$t('auth.upload_id')"
+                    prepend-icon=""
+                    outlined
+                    flat
+                    solo
+                    @change="onChangeId"
+                    v-if="idDataSource === null"
+                  ></v-file-input>
+                  <v-card
+                    class="gs_uploaded_id_scope_wrapper mb-4"
+                    color="transparent"
+                    elevation="0"
+                    v-else
+                  >
+                    <v-list-item three-line class="pa-0">
+                      <v-list-item-avatar
+                        tile
+                        width="207"
+                        height="143"
+                        color="transparent"
+                      >
+                        <v-img
+                          :src="idDataSource"
+                          width="100%"
+                          height="100%"
+                          cover
+                        ></v-img>
+                      </v-list-item-avatar>
+                      <v-list-item-content>
+                        <div class="text-h6">
+                          {{ $t("auth.your_id") }}
+                        </div>
+                        <v-list-item-title class="headline mb-1">
+                          {{ uploadedIdName }}
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                          <v-btn
+                            depressed
+                            plain
+                            color="transparent"
+                            class="pa-0"
+                            @click="idDataSource = null"
+                          >
+                            {{ $t("auth.upload_again") }}</v-btn
+                          >
+                        </v-list-item-subtitle>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-card>
+                </transition>
               </v-col>
             </v-row>
             <v-row>
@@ -122,6 +168,23 @@
         </v-form>
       </v-col>
     </v-row>
+    <!-- File upload error dialog -->
+    <v-dialog v-model="fileLoadErrorDialog" max-width="500">
+      <v-card class="pt-10 pa-5" outlined>
+        <v-alert class="text-center" dense outlined type="error">
+          {{ $t("auth.upload_error") }}
+        </v-alert>
+        <v-card-actions class="justify-center">
+          <v-btn
+            color="white darken-1"
+            text
+            @click="fileLoadErrorDialog = false"
+          >
+            {{ $t("global.ok") }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -138,11 +201,31 @@ export default {
     phoneNumber: "",
     showPassword: false,
     referral_code: "",
-    password: ""
+    password: "",
+    idDataSource: null,
+    fileLoadErrorDialog: false,
+    uploadedIdName: ""
   }),
   methods: {
     validateSignUp() {
       this.$refs.form.validate();
+    },
+    onChangeId(event) {
+      if (!event) {
+        this.fileLoadErrorDialog = true;
+      }
+      this.uploadedIdName = event.name;
+      let reader = new FileReader();
+      // Use the javascript reader object to load the contents
+      reader.readAsDataURL(event);
+
+      reader.onerror = () => {
+        this.fileLoadErrorDialog = true;
+      };
+
+      reader.onload = () => {
+        this.idDataSource = reader.result;
+      };
     }
   }
 };
@@ -150,7 +233,7 @@ export default {
 
 <style lang="scss" scoped>
 .gs_sign_up_container {
-  margin-top: 125px;
+  margin-top: 100px;
   h2 {
     font-family: $proximaBold;
     font-style: normal;
@@ -163,8 +246,8 @@ export default {
     font-family: $proximaReg;
     font-style: normal;
     font-weight: normal;
-    font-size: 20px;
-    line-height: 22px;
+    font-size: 18px;
+    line-height: 20px;
     mix-blend-mode: normal;
     opacity: 0.5;
     margin-bottom: 18px;
@@ -183,8 +266,8 @@ export default {
           font-family: $proximaReg;
           font-style: normal;
           font-weight: normal;
-          font-size: 20px;
-          line-height: 22px;
+          font-size: 18px;
+          line-height: 20px;
           text-transform: capitalize;
           color: $mainBlue !important;
         }
@@ -193,17 +276,60 @@ export default {
   }
   .gs_id_uploader_input {
     ::v-deep .v-input__slot {
-      border: 1px solid $mainBlue;
+      border: 1px solid $mainBlue !important;
       .v-file-input__text {
         font-family: $proximaBold;
         font-style: normal;
-        font-size: 20px;
-        line-height: 22px;
+        font-size: 18px;
+        line-height: 20px;
         justify-content: center;
         color: #ffffff;
+        @include respond-below(xs) {
+          font-size: 16px;
+          line-height: 16px;
+        }
       }
       .v-input__append-inner {
         display: none;
+      }
+    }
+  }
+  .gs_uploaded_id_scope_wrapper {
+    .v-avatar {
+      margin-top: 0;
+      margin-bottom: 0;
+      margin-right: 30px;
+      border-radius: 29px !important;
+    }
+    .v-list-item__content {
+      .text-h6 {
+        font-family: $proximaReg;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 20px;
+        opacity: 0.5;
+        margin-top: 17px;
+      }
+      .headline {
+        font-family: $proximaReg !important;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px !important;
+        line-height: 20px;
+        margin-top: 15px;
+        margin-bottom: 12px !important;
+      }
+      .v-btn {
+        font-family: $proximaReg;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 20px;
+        color: $blueBtn;
+        ::v-deep .v-btn__content {
+          opacity: 1 !important;
+        }
       }
     }
   }
@@ -216,18 +342,19 @@ export default {
       font-family: $proximaReg;
       font-style: normal;
       font-weight: normal;
-      font-size: 18px;
-      line-height: 18px;
+      font-size: 16px;
+      line-height: 16px;
       @include respond-below(xs) {
         font-size: 16px;
         line-height: 16px;
+        flex: 0 0 auto;
       }
     }
     .v-btn {
       font-family: $proximaBold;
       font-style: normal;
-      font-size: 18px;
-      line-height: 18px;
+      font-size: 16px;
+      line-height: 16px;
       color: $greenBtn;
       margin-left: 5px;
       letter-spacing: 0.1px;

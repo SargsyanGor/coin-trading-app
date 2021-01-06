@@ -4,7 +4,8 @@
     "email": "Email",
     "password": "Password",
     "name": "Name",
-    "phone_number": "Phone number"
+    "phone_number": "Phone number",
+    "ok": "Ok"
   },
   "auth": {
     "log_in": "Log in",
@@ -25,6 +26,9 @@
     "reset_link_sent": "Reset link has been sent",
     "we_have_sent_password": "We’ve sent you the reset link on your email.<br> Please check and click on that link we’ve sent",
     "upload_id": "Upload your ID",
+    "your_id": "Your ID",
+    "upload_again": "Upload again",
+    "upload_error": "An error occurred while uploading file",
     "referral_code": "Referral code (if any)",
     "input_code": "Input code",
     "have_account": "Already have account?"

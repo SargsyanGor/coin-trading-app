@@ -35,7 +35,7 @@
         v-if="!resetProcessConfirmed"
         key="1"
       >
-        <v-card-title class="headline justify-center">
+        <v-card-title class="justify-center">
           {{ $t("auth.forget_your_pass") }}
         </v-card-title>
 
@@ -70,7 +70,7 @@
         v-else
       >
         <v-list-item two-line>
-          <v-list-item-avatar tile size="110" class="my-0 mr-12">
+          <v-list-item-avatar tile size="110" class="mt-0 mb-sm-0 mb-10 mr-0 mr-sm-12">
             <v-img
               max-width="110px"
               max-height="110px"
@@ -79,8 +79,8 @@
             ></v-img>
           </v-list-item-avatar>
 
-          <v-list-item-content class="align-self-start pt-0">
-            <v-list-item-title class="headline mb-5">
+          <v-list-item-content class="align-self-start pt-0 text-center text-sm-left">
+            <v-list-item-title class="mb-5">
               {{ $t("auth.reset_link_sent") }}
             </v-list-item-title>
             <v-list-item-subtitle
@@ -138,6 +138,9 @@ export default {
   border-radius: 51px;
   padding: 40px;
   background: $mainBg;
+  @include respond-below(xs) {
+    padding: 25px 15px;
+  }
   .gs_header_close_btn_wrapper {
     position: relative;
     min-height: 40px;
@@ -151,6 +154,10 @@ export default {
       line-height: 24px;
       letter-spacing: 0.325px;
       margin-bottom: 12px;
+      @include respond-below(xs) {
+        font-size: 18px;
+        line-height: 16px;
+      }
     }
     .v-card__text {
       font-family: $proximaReg;
@@ -160,6 +167,10 @@ export default {
       line-height: 32px;
       opacity: 0.5;
       margin-bottom: 40px;
+      @include respond-below(xs) {
+        font-size: 16px;
+        line-height: 28px;
+      }
     }
     .gs_reset_pass_btn {
       margin-top: 18px;
@@ -168,22 +179,51 @@ export default {
   }
   .v-card.gs_reset_link_confirmed_wrapper {
     margin-bottom: 35px;
-    .headline {
-      font-family: $proximaBold;
-      font-style: normal;
-      font-weight: bold;
-      font-size: 26px;
-      line-height: 24px;
-      letter-spacing: 0.325px;
+    @include respond-below(xs) {
+      margin-bottom: 0;
     }
-    .v-list-item__subtitle {
-      font-family: $proximaReg;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 20px;
-      line-height: 30px;
-      mix-blend-mode: normal;
-      opacity: 0.5;
+    .v-list-item {
+      .v-list-item__title {
+        font-family: $proximaBold;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 26px;
+        line-height: 24px;
+        letter-spacing: 0.325px;
+        @include respond-below(sm) {
+          font-size: 22px;
+          line-height: 18px;
+        }
+        @include respond-below(xs) {
+          font-size: 16px;
+          line-height: 18px;
+        }
+      }
+      .v-list-item__subtitle {
+        font-family: $proximaReg;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 20px;
+        line-height: 30px;
+        mix-blend-mode: normal;
+        opacity: 0.5;
+        @include respond-below(sm) {
+          font-size: 18px;
+          line-height: 28px;
+          white-space: initial!important;
+          overflow: initial!important;
+          text-overflow: initial!important;
+          br {
+            display: none;
+          }
+        }
+        @include respond-below(xs) {
+          font-size: 16px;
+        }
+      }
+      @include respond-below(xs) {
+        flex-direction: column;
+      }
     }
   }
 }

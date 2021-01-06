@@ -26,7 +26,7 @@
               depressed
               height="50"
               min-width="90"
-              class="d-none d-lg-inline-flex"
+              class="d-none d-lg-inline-flex mr-8"
             >
               <v-img
                 max-height="38"
@@ -46,12 +46,12 @@
           </v-col>
           <v-col class="d-flex align-center justify-end gs_right_content">
             <v-card
-              class="gs_balance_card"
+              class="gs_balance_card d-none"
               max-width="344"
               color="transparent"
               elevation="0"
             >
-              <v-list-item two-line>
+              <v-list-item two-line class="pa-0 pa-sm-4">
                 <v-list-item-content class="d-inline pa-0">
                   <v-list-item-title>{{
                     $t("global.balance")
@@ -70,6 +70,7 @@
               </v-list-item>
             </v-card>
             <v-btn
+              style="display: none!important"
               class="gs_bell d-none d-sm-inline-flex"
               depressed
               height="50"
@@ -100,10 +101,10 @@
                   v-on="on"
                 >
                   <v-img
-                    max-height="50"
-                    max-width="50"
-                    cover
-                    src="https://picsum.photos/seed/picsum/200/300"
+                    max-height="38"
+                    max-width="38"
+                    contain
+                    src="@/assets/icons/user-default.svg"
                   ></v-img>
                 </v-btn>
               </template>
@@ -128,7 +129,13 @@
             src="@/assets/icons/LOGO.svg"
           ></v-img>
         </router-link>
-        <v-btn class="gs_bell d-inline-flex d-sm-none" depressed color="transparent" height="50" min-width="56">
+        <v-btn
+          class="gs_bell d-inline-flex d-sm-none"
+          depressed
+          color="transparent"
+          height="50"
+          min-width="56"
+        >
           <v-img
             max-height="38"
             max-width="38"
