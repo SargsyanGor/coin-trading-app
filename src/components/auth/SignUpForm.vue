@@ -84,7 +84,10 @@
                     elevation="0"
                     v-else
                   >
-                    <v-list-item three-line class="pa-0">
+                    <v-list-item
+                      three-line
+                      class="pa-0 flex-column flex-md-row"
+                    >
                       <v-list-item-avatar
                         tile
                         width="207"
@@ -295,40 +298,52 @@ export default {
     }
   }
   .gs_uploaded_id_scope_wrapper {
-    .v-avatar {
-      margin-top: 0;
-      margin-bottom: 0;
-      margin-right: 30px;
-      border-radius: 29px !important;
-    }
-    .v-list-item__content {
-      .text-h6 {
-        font-family: $proximaReg;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 20px;
-        opacity: 0.5;
-        margin-top: 17px;
+    .v-list-item {
+      .v-avatar {
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-right: 30px;
+        border-radius: 29px !important;
+        @include respond-below(sm) {
+          margin-right: 0;
+          width: 100% !important;
+          height: 250px !important;
+        }
       }
-      .headline {
-        font-family: $proximaReg !important;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px !important;
-        line-height: 20px;
-        margin-top: 15px;
-        margin-bottom: 12px !important;
+      .v-list-item__content {
+        .text-h6 {
+          font-family: $proximaReg;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 20px;
+          opacity: 0.5;
+          margin-top: 17px;
+        }
+        .headline {
+          font-family: $proximaReg !important;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px !important;
+          line-height: 20px;
+          margin-top: 15px;
+          margin-bottom: 12px !important;
+        }
+        .v-btn {
+          font-family: $proximaReg;
+          font-style: normal;
+          font-weight: normal;
+          font-size: 18px;
+          line-height: 20px;
+          color: $blueBtn;
+          ::v-deep .v-btn__content {
+            opacity: 1 !important;
+          }
+        }
       }
-      .v-btn {
-        font-family: $proximaReg;
-        font-style: normal;
-        font-weight: normal;
-        font-size: 18px;
-        line-height: 20px;
-        color: $blueBtn;
-        ::v-deep .v-btn__content {
-          opacity: 1 !important;
+      @include respond-below(sm) {
+        &::after {
+          height: initial !important;
         }
       }
     }
