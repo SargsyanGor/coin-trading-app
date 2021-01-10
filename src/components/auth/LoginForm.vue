@@ -41,7 +41,7 @@
               height="70"
               max-width="473px"
               class="gs_login_btn"
-              @click="validate()"
+              @click="validateLogIn()"
             >
               {{ $t("auth.log_in") }}
             </v-btn>
@@ -66,27 +66,25 @@
   </v-container>
 </template>
 
-<script>
-import ResetPasswordDialog from "./ResetPasswordDialog";
-import { formValidationRules } from "@/mixins/formValidationRules";
+<script lang="ts">
+import ResetPasswordDialog from "./ResetPasswordDialog.vue";
+import { Component, Mixins } from "vue-property-decorator";
+import FormValidationRules from "@/mixins/FormValidationRules";
 
-export default {
-  name: "LoginForm",
-  components: { ResetPasswordDialog },
-  mixins: [formValidationRules],
-  data: () => ({
-    showResetPassDialog: false,
-    valid: true,
-    email: "",
-    showPassword: false,
-    password: ""
-  }),
-  methods: {
-    validate() {
-      this.$refs.form.validate();
-    }
+@Component({
+  components: { ResetPasswordDialog }
+})
+export default class LoginForm extends Mixins(FormValidationRules) {
+  showResetPassDialog: boolean = false;
+  valid: boolean = true;
+  email: string = "";
+  showPassword: boolean = false;
+  password: string = "";
+
+  validateLogIn() {
+    (this.$refs.form as Vue & { validate: () => boolean }).validate();
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

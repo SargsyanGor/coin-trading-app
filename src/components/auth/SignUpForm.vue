@@ -191,47 +191,45 @@
   </v-container>
 </template>
 
-<script>
-import { formValidationRules } from "../../mixins/formValidationRules";
+<script lang="ts">
+import { Component, Mixins } from "vue-property-decorator";
+import FormValidationRules from "@/mixins/FormValidationRules";
 
-export default {
-  name: "SignUpForm",
-  mixins: [formValidationRules],
-  data: () => ({
-    validSignUp: true,
-    name: "",
-    email: "",
-    phoneNumber: "",
-    showPassword: false,
-    referral_code: "",
-    password: "",
-    idDataSource: null,
-    fileLoadErrorDialog: false,
-    uploadedIdName: ""
-  }),
-  methods: {
-    validateSignUp() {
-      this.$refs.form.validate();
-    },
-    onChangeId(event) {
-      if (!event) {
-        this.fileLoadErrorDialog = true;
-      }
-      this.uploadedIdName = event.name;
-      let reader = new FileReader();
-      // Use the javascript reader object to load the contents
-      reader.readAsDataURL(event);
+@Component
+export default class SignUpForm extends Mixins(FormValidationRules) {
+  validSignUp: boolean = true;
+  name: string = "";
+  email: string = "";
+  phoneNumber: any = "";
+  showPassword: boolean = false;
+  referral_code: string = "";
+  password: string = "";
+  idDataSource: any = null;
+  fileLoadErrorDialog: boolean = false;
+  uploadedIdName: string = "";
 
-      reader.onerror = () => {
-        this.fileLoadErrorDialog = true;
-      };
-
-      reader.onload = () => {
-        this.idDataSource = reader.result;
-      };
-    }
+  validateSignUp() {
+    (this.$refs.form as Vue & { validate: () => boolean }).validate();
   }
-};
+
+  onChangeId(event: any) {
+    if (!event) {
+      this.fileLoadErrorDialog = true;
+    }
+    this.uploadedIdName = event.name;
+    let reader = new FileReader();
+    // Use the javascript reader object to load the contents
+    reader.readAsDataURL(event);
+
+    reader.onerror = () => {
+      this.fileLoadErrorDialog = true;
+    };
+
+    reader.onload = () => {
+      this.idDataSource = reader.result;
+    };
+  }
+}
 </script>
 
 <style lang="scss" scoped>

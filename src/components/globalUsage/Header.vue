@@ -165,18 +165,19 @@
   </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    drawer: false,
-    items: [
-      { title: "Click Me 1" },
-      { title: "Click Me 2" },
-      { title: "Click Me 3" },
-      { title: "Click Me 4" }
-    ]
-  })
-};
+<script lang="ts">
+import { Vue, Component } from "vue-property-decorator";
+
+@Component
+export default class Header extends Vue {
+  drawer: boolean = false;
+  items: Array<object> = [
+    { title: "Click Me 1" },
+    { title: "Click Me 2" },
+    { title: "Click Me 3" },
+    { title: "Click Me 4" }
+  ];
+}
 </script>
 
 <style lang="scss" scoped>

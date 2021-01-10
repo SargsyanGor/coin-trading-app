@@ -31,7 +31,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
   const loggedIn = localStorage.getItem("user");
-  console.log(to.path);
 
   if (to.path !== "/" && !loggedIn) {
     return next("/");

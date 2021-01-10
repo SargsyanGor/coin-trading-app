@@ -70,7 +70,11 @@
         v-else
       >
         <v-list-item two-line>
-          <v-list-item-avatar tile size="110" class="mt-0 mb-sm-0 mb-10 mr-0 mr-sm-12">
+          <v-list-item-avatar
+            tile
+            size="110"
+            class="mt-0 mb-sm-0 mb-10 mr-0 mr-sm-12"
+          >
             <v-img
               max-width="110px"
               max-height="110px"
@@ -79,7 +83,9 @@
             ></v-img>
           </v-list-item-avatar>
 
-          <v-list-item-content class="align-self-start pt-0 text-center text-sm-left">
+          <v-list-item-content
+            class="align-self-start pt-0 text-center text-sm-left"
+          >
             <v-list-item-title class="mb-5">
               {{ $t("auth.reset_link_sent") }}
             </v-list-item-title>
@@ -93,43 +99,38 @@
   </v-dialog>
 </template>
 
-<script>
-export default {
-  name: "ResetPasswordDialog",
-  props: {
-    value: Boolean
-  },
-  data: () => ({
-    validPassReset: false,
-    email: "",
-    resetProcessConfirmed: false,
-    emailRules: {
-      required: v => !!v || "E-mail is required",
-      validEmail: v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+<script lang="ts">
+import { Component, Prop, Mixins } from "vue-property-decorator";
+import FormValidationRules from "@/mixins/FormValidationRules";
+
+@Component
+export default class ResetPasswordDialog extends Mixins(FormValidationRules) {
+  @Prop({ required: true }) value: boolean;
+
+  validPassReset: boolean = false;
+  email: string = "";
+  resetProcessConfirmed: boolean = false;
+
+  get show(): boolean {
+    console.log(this.value)
+    return this.value;
+  }
+  set show(newValue: boolean) {
+    if (!newValue) {
+      this.resetProcessConfirmed = false;
     }
-  }),
-  computed: {
-    show: {
-      get() {
-        return this.value;
-      },
-      set(value) {
-        if (!value) {
-          this.resetProcessConfirmed = false;
-        }
-        this.$emit("input", value);
-      }
-    }
-  },
-  methods: {
-    validatePassReset() {
-      let validationSuccess = this.$refs.form.validate();
-      if (validationSuccess) {
-        this.resetProcessConfirmed = true;
-      }
+    this.$emit("input", newValue);
+  }
+
+  validatePassReset() {
+    let validationSuccess = (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (validationSuccess) {
+      this.resetProcessConfirmed = true;
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -210,9 +211,9 @@ export default {
         @include respond-below(sm) {
           font-size: 18px;
           line-height: 28px;
-          white-space: initial!important;
-          overflow: initial!important;
-          text-overflow: initial!important;
+          white-space: initial !important;
+          overflow: initial !important;
+          text-overflow: initial !important;
           br {
             display: none;
           }

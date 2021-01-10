@@ -11,23 +11,24 @@
   </div>
 </template>
 
-<script>
-import LoginForm from "../components/auth/LoginForm";
-import SignUpForm from "../components/auth/SignUpForm";
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import LoginForm from "../components/auth/LoginForm.vue";
+import SignUpForm from "../components/auth/SignUpForm.vue";
 
-export default {
-  name: "Home",
-  components: { LoginForm, SignUpForm },
-  data: () => ({
-    accountExists: true
-  }),
-  methods: {
-    activateSignUpComponent() {
-      this.accountExists = false;
-    },
-    activateLoginComponent() {
-      this.accountExists = true;
-    }
+@Component({
+  components: { LoginForm, SignUpForm }
+})
+export default class Auth extends Vue {
+  accountExists: boolean = true;
+
+  activateSignUpComponent(): void {
+    this.accountExists = false;
   }
-};
+
+  activateLoginComponent(): void {
+    this.accountExists = true;
+  }
+}
 </script>

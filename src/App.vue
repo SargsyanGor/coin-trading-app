@@ -7,20 +7,15 @@
   </v-app>
 </template>
 
-<script>
-import Header from "./components/globalUsage/Header";
+<script lang="ts">
+import Vue from "vue";
+import Component from "vue-class-component";
+import Header from "./components/globalUsage/Header.vue";
 
-export default {
-  name: "App",
-
-  components: {
-    Header
-  },
-
-  data: () => ({
-    //
-  })
-};
+@Component({
+  components: { Header }
+})
+export default class App extends Vue {}
 </script>
 
 <style lang="scss">
