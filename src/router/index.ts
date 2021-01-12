@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Auth from "../views/Auth.vue";
+import Account from "../views/Account.vue";
 
 Vue.use(VueRouter);
 
@@ -10,6 +11,7 @@ const routes = [
     name: "Login",
     component: Auth
   },
+  { path: "/account/:accountId", component: Account },
   // otherwise redirect to login
   { path: "*", redirect: "/" }
   // {
@@ -30,7 +32,7 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   // redirect to login page if not logged in and trying to access a restricted page
-  const loggedIn = localStorage.getItem("user");
+  const loggedIn = true; // localStorage.getItem("user")
 
   if (to.path !== "/" && !loggedIn) {
     return next("/");

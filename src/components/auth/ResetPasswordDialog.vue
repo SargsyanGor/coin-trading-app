@@ -105,7 +105,7 @@ import FormValidationRules from "@/mixins/FormValidationRules";
 
 @Component
 export default class ResetPasswordDialog extends Mixins(FormValidationRules) {
-  @Prop({ required: true }) value: boolean;
+  @Prop({ required: true }) value!: boolean;
 
   validPassReset: boolean = false;
   email: string = "";

@@ -2,14 +2,13 @@
   <v-container fluid class="gs_sign_up_container">
     <v-row class="justify-center">
       <v-col sm="9" md="9" lg="6">
-        <h2 class="text-md-left text-center pl-3">{{ $t("auth.sign_up") }}</h2>
-        <v-form ref="form" v-model="validSignUp" lazy-validation>
-          <v-container fluid>
+        <h2 class="text-md-left text-center">{{ $t("auth.sign_up") }}</h2>
+        <v-form ref="form" lazy-validation>
             <v-row>
               <v-col cols="12" md="6">
                 <h5>{{ $t("global.name") }}</h5>
                 <v-text-field
-                  v-model="name"
+                  v-model="user.name"
                   :rules="[nameRules.required]"
                   :placeholder="$t('auth.write_name')"
                   height="68"
@@ -21,7 +20,7 @@
               <v-col cols="12" md="6">
                 <h5>{{ $t("global.email") }}</h5>
                 <v-text-field
-                  v-model="email"
+                  v-model="user.email"
                   :rules="[emailRules.required, emailRules.validEmail]"
                   :placeholder="$t('auth.write_email')"
                   type="email"
@@ -35,7 +34,7 @@
               <v-col cols="12" md="6">
                 <h5>{{ $t("global.phone_number") }}</h5>
                 <v-text-field
-                  v-model="phoneNumber"
+                  v-model="user.phoneNumber"
                   :rules="[phoneNumberRules.required]"
                   :placeholder="$t('auth.input_phone_number')"
                   type="number"
@@ -47,7 +46,7 @@
               <v-col cols="12" md="6">
                 <h5>{{ $t("global.password") }}</h5>
                 <v-text-field
-                  v-model="password"
+                  v-model="user.password"
                   :append-icon="
                     showPassword ? $t('auth.hide') : $t('auth.view')
                   "
@@ -76,7 +75,7 @@
                     flat
                     solo
                     @change="onChangeId"
-                    v-if="idDataSource === null"
+                    v-if="user.idDataSource === null"
                   ></v-file-input>
                   <v-card
                     class="gs_uploaded_id_scope_wrapper mb-4"
@@ -95,7 +94,7 @@
                         color="transparent"
                       >
                         <v-img
-                          :src="idDataSource"
+                          :src="user.idDataSource"
                           width="100%"
                           height="100%"
                           cover
@@ -114,7 +113,7 @@
                             plain
                             color="transparent"
                             class="pa-0"
-                            @click="idDataSource = null"
+                            @click="user.idDataSource = null"
                           >
                             {{ $t("auth.upload_again") }}</v-btn
                           >
@@ -129,7 +128,7 @@
               <v-col cols="12">
                 <h5>{{ $t("auth.referral_code") }}</h5>
                 <v-text-field
-                  v-model="referral_code"
+                  v-model="user.referralCode"
                   :placeholder="$t('auth.input_code')"
                   height="68"
                   solo
@@ -167,7 +166,6 @@
                 </v-btn>
               </v-col>
             </v-row>
-          </v-container>
         </v-form>
       </v-col>
     </v-row>
@@ -193,23 +191,54 @@
 
 <script lang="ts">
 import { Component, Mixins } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+const Auth = namespace("Auth");
 import FormValidationRules from "@/mixins/FormValidationRules";
 
 @Component
 export default class SignUpForm extends Mixins(FormValidationRules) {
-  validSignUp: boolean = true;
-  name: string = "";
-  email: string = "";
-  phoneNumber: any = "";
+  private user: any = {
+    name: "",
+    email: "",
+    phoneNumber: "",
+    password: "",
+    idDataSource: null,
+    referralCode: null
+  };
   showPassword: boolean = false;
-  referral_code: string = "";
-  password: string = "";
-  idDataSource: any = null;
   fileLoadErrorDialog: boolean = false;
   uploadedIdName: string = "";
 
+  @Auth.Getter
+  private isLoggedIn!: boolean;
+
+  @Auth.Action
+  private register!: (data: any) => Promise<any>;
+
+  // need to be removed(fake success for Header UI)-------------------------
+  @Auth.Mutation
+  private loginFailure!: () => void;
+
+  mounted() {
+    // need to be removed(fake success for UI)-------------------------
+    this.loginFailure();
+  }
+
   validateSignUp() {
-    (this.$refs.form as Vue & { validate: () => boolean }).validate();
+    let enteredDataStatusOk = (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (enteredDataStatusOk) {
+      this.register(this.user).then(
+        data => {
+          console.log(data);
+          this.$router.push("/account/55");
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }
   }
 
   onChangeId(event: any) {
@@ -226,7 +255,7 @@ export default class SignUpForm extends Mixins(FormValidationRules) {
     };
 
     reader.onload = () => {
-      this.idDataSource = reader.result;
+      this.user.idDataSource = reader.result;
     };
   }
 }

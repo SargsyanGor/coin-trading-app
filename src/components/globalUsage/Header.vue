@@ -46,7 +46,8 @@
           </v-col>
           <v-col class="d-flex align-center justify-end gs_right_content">
             <v-card
-              class="gs_balance_card d-none"
+              v-if="isLoggedIn"
+              class="gs_balance_card"
               max-width="344"
               color="transparent"
               elevation="0"
@@ -70,7 +71,7 @@
               </v-list-item>
             </v-card>
             <v-btn
-              style="display: none!important"
+              v-if="isLoggedIn"
               class="gs_bell d-none d-sm-inline-flex"
               depressed
               height="50"
@@ -84,6 +85,7 @@
               ></v-img>
             </v-btn>
             <v-menu
+              v-if="isLoggedIn"
               offset-y
               bottom
               left
@@ -101,10 +103,9 @@
                   v-on="on"
                 >
                   <v-img
-                    max-height="38"
-                    max-width="38"
-                    contain
-                    src="@/assets/icons/user-default.svg"
+                    max-height="50"
+                    max-width="50"
+                    src="@/assets/imgs/yanni.jpg"
                   ></v-img>
                 </v-btn>
               </template>
@@ -114,6 +115,20 @@
                 </v-list-item>
               </v-list>
             </v-menu>
+            <v-btn
+              v-else
+              class="gs_menu_activator overflow-hidden"
+              fab
+              width="50"
+              height="50"
+            >
+              <v-img
+                max-height="38"
+                max-width="38"
+                contain
+                src="@/assets/icons/user-default.svg"
+              ></v-img>
+            </v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -130,6 +145,7 @@
           ></v-img>
         </router-link>
         <v-btn
+          v-if="isLoggedIn"
           class="gs_bell d-inline-flex d-sm-none"
           depressed
           color="transparent"
@@ -167,9 +183,20 @@
 
 <script lang="ts">
 import { Vue, Component } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+const Auth = namespace("Auth");
 
 @Component
 export default class Header extends Vue {
+  @Auth.State("status")
+  private UserIsLoggedIn!: any;
+
+  @Auth.Action
+  private signOut!: () => void;
+
+  @Auth.Getter
+  private isLoggedIn!: boolean;
+
   drawer: boolean = false;
   items: Array<object> = [
     { title: "Click Me 1" },
@@ -177,6 +204,11 @@ export default class Header extends Vue {
     { title: "Click Me 3" },
     { title: "Click Me 4" }
   ];
+
+  logOut() {
+    this.signOut();
+    this.$router.push("/");
+  }
 }
 </script>
 

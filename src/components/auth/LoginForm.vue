@@ -3,10 +3,10 @@
     <v-row class="justify-center">
       <v-col sm="9" md="8" lg="4">
         <h2 class="text-md-left text-center">{{ $t("auth.log_in") }}</h2>
-        <v-form ref="form" v-model="valid" lazy-validation>
+        <v-form ref="form" lazy-validation>
           <h5>{{ $t("global.email") }}</h5>
           <v-text-field
-            v-model="email"
+            v-model="user.email"
             :rules="[emailRules.required, emailRules.validEmail]"
             :placeholder="$t('auth.input_email')"
             height="68"
@@ -15,7 +15,7 @@
           ></v-text-field>
           <h5>{{ $t("global.password") }}</h5>
           <v-text-field
-            v-model="password"
+            v-model="user.password"
             :append-icon="showPassword ? $t('auth.hide') : $t('auth.view')"
             :rules="[passwordRules.required, passwordRules.min]"
             :type="showPassword ? 'text' : 'password'"
@@ -69,6 +69,8 @@
 <script lang="ts">
 import ResetPasswordDialog from "./ResetPasswordDialog.vue";
 import { Component, Mixins } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+const Auth = namespace("Auth");
 import FormValidationRules from "@/mixins/FormValidationRules";
 
 @Component({
@@ -76,13 +78,42 @@ import FormValidationRules from "@/mixins/FormValidationRules";
 })
 export default class LoginForm extends Mixins(FormValidationRules) {
   showResetPassDialog: boolean = false;
-  valid: boolean = true;
-  email: string = "";
   showPassword: boolean = false;
-  password: string = "";
+  private user: any = {
+    email: "",
+    password: ""
+  };
+
+  @Auth.Getter
+  private isLoggedIn!: boolean;
+
+  @Auth.Action
+  private login!: (data: any) => Promise<any>;
+
+  // need to be removed(fake success for Header UI)-------------------------
+  @Auth.Mutation
+  private loginFailure!: () => void;
+
+  mounted() {
+    // need to be removed(fake success for Header UI)-------------------------
+    this.loginFailure();
+  }
 
   validateLogIn() {
-    (this.$refs.form as Vue & { validate: () => boolean }).validate();
+    let enteredDataStatusOk = (this.$refs.form as Vue & {
+      validate: () => boolean;
+    }).validate();
+    if (enteredDataStatusOk) {
+      this.login(this.user).then(
+        data => {
+          console.log(data)
+          this.$router.push("/account/55");
+        },
+        error => {
+          console.log(error)
+        }
+      );
+    }
   }
 }
 </script>
